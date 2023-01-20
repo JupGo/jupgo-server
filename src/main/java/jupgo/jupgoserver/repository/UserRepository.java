@@ -16,7 +16,6 @@ public class UserRepository {
         return userDto;
     }
 
-
     public Optional<UserDto> findByEmail(String email) {
         UserDto userDto = em.find(UserDto.class, email);
         return Optional.ofNullable(userDto);

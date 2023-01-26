@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.text.DateFormat;
 import java.time.LocalDate;
 
+@Entity
 public class DiaryDto {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +15,11 @@ public class DiaryDto {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private Long userId;
+    private UserDto userDto;
 
     @ManyToOne
     @JoinColumn(name="diary_id")
-    private Long treeId;
+    private TreeDto treeDto;
 
     public Long getId() {
         return id;

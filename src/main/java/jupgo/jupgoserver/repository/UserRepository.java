@@ -3,7 +3,9 @@ import jupgo.jupgoserver.dto.UserDto;
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserRepository {
     private final EntityManager em;
 

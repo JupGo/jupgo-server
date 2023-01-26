@@ -2,6 +2,7 @@ package jupgo.jupgoserver.dto;
 
 import javax.persistence.*;
 
+@Entity
 public class TreeDto {
 
     public Long getId() {
@@ -35,5 +36,5 @@ public class TreeDto {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private Long userId;
+    private UserDto userDto;
 }

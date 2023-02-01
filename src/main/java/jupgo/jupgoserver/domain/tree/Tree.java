@@ -12,7 +12,11 @@ public class Tree {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private TreeType name;
+    private String name;
+
+    private String sort;
+
+    private Integer level;
 
     private Integer percentage;
 
@@ -32,7 +36,7 @@ public class Tree {
     }
 
     public String getName() {
-        return name.getName();
+        return name;
     }
 
     public Integer getPercentage() {

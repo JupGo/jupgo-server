@@ -1,6 +1,8 @@
 package jupgo.jupgoserver.domain.tree;
 
+import java.util.List;
 import javax.persistence.*;
+import jupgo.jupgoserver.domain.diary.Diary;
 import jupgo.jupgoserver.domain.user.User;
 
 @Entity
@@ -17,6 +19,9 @@ public class Tree {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "tree")
+    private List<Diary> diaries;
 
     public Long getId() {
         return id;

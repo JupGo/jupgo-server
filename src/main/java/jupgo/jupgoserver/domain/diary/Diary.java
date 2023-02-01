@@ -12,14 +12,19 @@ public class Diary {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
+    private String location;
+
+    private Float distance;
+
+    private DurationType duration;
+
+    private String photo;
 
     @ManyToOne
-    @JoinColumn(name="diary_id")
+    @JoinColumn(name="tree_id")
     private Tree tree;
 
     public Long getId() {
@@ -69,10 +74,5 @@ public class Diary {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-
-    private String location;
-    private Float distance;
-    private DurationType duration;
-    private String photo;
 
 }

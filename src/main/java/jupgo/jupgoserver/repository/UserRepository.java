@@ -1,7 +1,6 @@
 package jupgo.jupgoserver.repository;
-import jupgo.jupgoserver.dto.UserDto;
+import jupgo.jupgoserver.domain.user.User;
 import javax.persistence.EntityManager;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
@@ -13,13 +12,13 @@ public class UserRepository {
         this.em = em;
     }
 
-    public UserDto save(UserDto userDto) {
-        em.persist(userDto);
-        return userDto;
+    public User save(User user) {
+        em.persist(user);
+        return user;
     }
 
-    public Optional<UserDto> findByEmail(String email) {
-        UserDto userDto = em.find(UserDto.class, email);
-        return Optional.ofNullable(userDto);
+    public Optional<User> findByEmail(String email) {
+        User user = em.find(User.class, email);
+        return Optional.ofNullable(user);
     }
 }

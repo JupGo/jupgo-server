@@ -1,25 +1,31 @@
-package jupgo.jupgoserver.dto;
+package jupgo.jupgoserver.domain.diary;
 
+import jupgo.jupgoserver.domain.tree.Tree;
+import jupgo.jupgoserver.domain.user.User;
 import org.hibernate.type.DurationType;
 
 import javax.persistence.*;
-import java.text.DateFormat;
 import java.time.LocalDate;
 
 @Entity
-public class DiaryDto {
+public class Diary {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private UserDto userDto;
+    private String location;
+
+    private Float distance;
+
+    private DurationType duration;
+
+    private String photo;
 
     @ManyToOne
-    @JoinColumn(name="diary_id")
-    private TreeDto treeDto;
+    @JoinColumn(name="tree_id")
+    private Tree tree;
 
     public Long getId() {
         return id;
@@ -68,10 +74,5 @@ public class DiaryDto {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-
-    private String location;
-    private Float distance;
-    private DurationType duration;
-    private String photo;
 
 }

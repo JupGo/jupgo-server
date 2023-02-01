@@ -3,17 +3,14 @@ package jupgo.jupgoserver.service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import jupgo.jupgoserver.dto.UserDto;
+import jupgo.jupgoserver.domain.User;
 import jupgo.jupgoserver.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -78,9 +75,9 @@ public class UserService {
         return access_Token;
     }
 
-    public UserDto createKakaoUser(String token) throws IOException {
+    public User createKakaoUser(String token) throws IOException {
         String reqURL = "https://kapi.kakao.com/v2/user/me";
-        UserDto userDto = new UserDto();
+        User user = new User();
 
         //access_token을 이용하여 사용자 정보 조회
         try {
@@ -115,16 +112,16 @@ public class UserService {
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
 
-            userDto.setNickname(nickname);
-            userDto.setEmail(email);
+            user.setNickname(nickname);
+            user.setEmail(email);
 
             if (userRepository.findByEmail(email).isEmpty()) {
-                userRepository.save(userDto);
+                userRepository.save(user);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return userDto;
+        return user;
     }
 }

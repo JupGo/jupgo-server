@@ -1,9 +1,9 @@
-package jupgo.jupgoserver.dto;
+package jupgo.jupgoserver.domain;
 
 import javax.persistence.*;
 
 @Entity
-public class TreeDto {
+public class Tree {
 
     public Long getId() {
         return id;
@@ -36,5 +36,5 @@ public class TreeDto {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private UserDto userDto;
+    private User user;
 }

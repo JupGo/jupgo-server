@@ -1,13 +1,12 @@
-package jupgo.jupgoserver.dto;
+package jupgo.jupgoserver.domain;
 
 import org.hibernate.type.DurationType;
 
 import javax.persistence.*;
-import java.text.DateFormat;
 import java.time.LocalDate;
 
 @Entity
-public class DiaryDto {
+public class Diary {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,11 +14,11 @@ public class DiaryDto {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private UserDto userDto;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name="diary_id")
-    private TreeDto treeDto;
+    private Tree tree;
 
     public Long getId() {
         return id;

@@ -12,7 +12,7 @@ public class Tree {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private TreeType name;
 
     private Integer percentage;
 
@@ -32,11 +32,7 @@ public class Tree {
     }
 
     public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        return name.getName();
     }
 
     public Integer getPercentage() {

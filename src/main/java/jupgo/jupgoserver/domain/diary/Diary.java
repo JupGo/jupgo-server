@@ -1,5 +1,7 @@
-package jupgo.jupgoserver.domain;
+package jupgo.jupgoserver.domain.diary;
 
+import jupgo.jupgoserver.domain.tree.Tree;
+import jupgo.jupgoserver.domain.user.User;
 import org.hibernate.type.DurationType;
 
 import javax.persistence.*;

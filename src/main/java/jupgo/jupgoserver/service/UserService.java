@@ -3,7 +3,7 @@ package jupgo.jupgoserver.service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import jupgo.jupgoserver.domain.User;
+import jupgo.jupgoserver.domain.user.User;
 import jupgo.jupgoserver.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

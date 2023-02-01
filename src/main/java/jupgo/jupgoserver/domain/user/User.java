@@ -1,4 +1,4 @@
-package jupgo.jupgoserver.domain;
+package jupgo.jupgoserver.domain.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

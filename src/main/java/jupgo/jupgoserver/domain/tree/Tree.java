@@ -1,9 +1,22 @@
-package jupgo.jupgoserver.domain;
+package jupgo.jupgoserver.domain.tree;
 
 import javax.persistence.*;
+import jupgo.jupgoserver.domain.user.User;
 
 @Entity
 public class Tree {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    private Integer percentage;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Long getId() {
         return id;
@@ -28,13 +41,4 @@ public class Tree {
     public void setPercentage(Integer percentage) {
         this.percentage = percentage;
     }
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private Integer percentage;
-
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
 }

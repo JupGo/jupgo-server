@@ -1,5 +1,5 @@
 package jupgo.jupgoserver.repository;
-import jupgo.jupgoserver.domain.User;
+import jupgo.jupgoserver.domain.user.User;
 import javax.persistence.EntityManager;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;

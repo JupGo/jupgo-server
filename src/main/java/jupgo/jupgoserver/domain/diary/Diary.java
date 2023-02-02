@@ -1,8 +1,8 @@
 package jupgo.jupgoserver.domain.diary;
 
+import java.time.Duration;
 import jupgo.jupgoserver.domain.tree.Tree;
-import jupgo.jupgoserver.domain.user.User;
-import org.hibernate.type.DurationType;
+import jupgo.jupgoserver.dto.DiaryRequestDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,15 +17,27 @@ public class Diary {
 
     private String location;
 
-    private Float distance;
+    private int distance;
 
-    private DurationType duration;
+    private Duration duration;
 
     private String photo;
 
     @ManyToOne
     @JoinColumn(name="tree_id")
     private Tree tree;
+
+    public Diary(DiaryRequestDto diaryRequestDto) {
+        this.date = diaryRequestDto.getDate();
+        this.location = diaryRequestDto.getLocation();
+        this.distance = diaryRequestDto.getDistance();
+        this.duration = diaryRequestDto.getDuration();
+        this.photo = diaryRequestDto.getPhoto();
+    }
+
+    public Diary() {
+
+    }
 
     public Long getId() {
         return id;
@@ -51,19 +63,19 @@ public class Diary {
         this.location = location;
     }
 
-    public Float getDistance() {
+    public int getDistance() {
         return distance;
     }
 
-    public void setDistance(Float distance) {
+    public void setDistance(int distance) {
         this.distance = distance;
     }
 
-    public DurationType getDuration() {
+    public Duration getDuration() {
         return duration;
     }
 
-    public void setDuration(DurationType duration) {
+    public void setDuration(Duration duration) {
         this.duration = duration;
     }
 

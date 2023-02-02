@@ -1,5 +1,6 @@
 package jupgo.jupgoserver.controller;
 
+import jupgo.jupgoserver.dto.DiaryRequestDto;
 import jupgo.jupgoserver.service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,8 @@ public class DiaryController {
 
     @ResponseBody
     @PostMapping()
-    public void saveDiary(@RequestBody ) throws Exception {
-
+    public void saveDiary(@RequestBody DiaryRequestDto diaryRequestDto) throws Exception {
+        System.out.println(diaryRequestDto);
+        diaryService.saveDiary(diaryRequestDto);
     }
 }

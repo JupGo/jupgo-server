@@ -110,14 +110,17 @@ public class UserService {
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-            String email = kakao_account.getAsJsonObject().get("email").getAsString();
+//            String email = kakao_account.getAsJsonObject().get("email").getAsString(); // TODO 활성화하기
 
             user.setNickname(nickname);
-            user.setEmail(email);
+//            user.setEmail(email);
+            user.setEmail("test@test.test"); // TODO 위엣 라인과 교체하기
 
-            if (userRepository.findByEmail(email).isEmpty()) {
-                userRepository.save(user);
-            }
+//            if (userRepository.findByEmail(email).isEmpty()) {
+//                userRepository.save(user);
+//            }
+            userRepository.save(user); // TODO 위엣 if문과 교체하기
+
         } catch (IOException e) {
             e.printStackTrace();
         }

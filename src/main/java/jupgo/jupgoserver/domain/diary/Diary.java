@@ -2,7 +2,7 @@ package jupgo.jupgoserver.domain.diary;
 
 import java.time.Duration;
 import jupgo.jupgoserver.domain.tree.Tree;
-import jupgo.jupgoserver.dto.DiaryRequestDto;
+import jupgo.jupgoserver.dto.diary.SaveDiaryRequestDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,12 +27,12 @@ public class Diary {
     @JoinColumn(name="tree_id")
     private Tree tree;
 
-    public Diary(DiaryRequestDto diaryRequestDto) {
-        this.date = diaryRequestDto.getDate();
-        this.location = diaryRequestDto.getLocation();
-        this.distance = diaryRequestDto.getDistance();
-        this.duration = diaryRequestDto.getDuration();
-        this.photo = diaryRequestDto.getPhoto();
+    public Diary(SaveDiaryRequestDto saveDiaryRequestDto) {
+        this.date = saveDiaryRequestDto.getDate();
+        this.location = saveDiaryRequestDto.getLocation();
+        this.distance = saveDiaryRequestDto.getDistance();
+        this.duration = saveDiaryRequestDto.getDuration();
+        this.photo = saveDiaryRequestDto.getPhoto();
     }
 
     public Diary() {

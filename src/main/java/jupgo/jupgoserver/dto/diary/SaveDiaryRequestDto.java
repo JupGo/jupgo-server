@@ -1,4 +1,4 @@
-package jupgo.jupgoserver.dto;
+package jupgo.jupgoserver.dto.diary;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,7 +9,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-public class DiaryRequestDto {
+public class SaveDiaryRequestDto {
     private LocalDate date;
     private String location;
     private int distance;

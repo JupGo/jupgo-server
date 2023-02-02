@@ -1,8 +1,8 @@
 package jupgo.jupgoserver.service;
 
-import java.io.IOException;
 import jupgo.jupgoserver.domain.diary.Diary;
-import jupgo.jupgoserver.dto.DiaryRequestDto;
+import jupgo.jupgoserver.dto.diary.SaveDiaryRequestDto;
+import jupgo.jupgoserver.dto.diary.SaveDiaryResponseDto;
 import jupgo.jupgoserver.repository.DiaryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +17,9 @@ public class DiaryService {
         this.diaryRepository = diaryRepository;
     }
 
-    public Diary saveDiary(DiaryRequestDto diaryRequestDto) {
-        Diary diary = new Diary(diaryRequestDto);
+    public SaveDiaryResponseDto saveDiary(SaveDiaryRequestDto saveDiaryRequestDto) {
+        Diary diary = new Diary(saveDiaryRequestDto);
         diaryRepository.save(diary);
-        return diary;
+        return new SaveDiaryResponseDto(diary);
     }
 }

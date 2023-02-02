@@ -1,7 +1,8 @@
 package jupgo.jupgoserver.controller;
 
 import jupgo.jupgoserver.domain.diary.Diary;
-import jupgo.jupgoserver.dto.DiaryRequestDto;
+import jupgo.jupgoserver.dto.diary.SaveDiaryRequestDto;
+import jupgo.jupgoserver.dto.diary.SaveDiaryResponseDto;
 import jupgo.jupgoserver.service.DiaryService;
 import jupgo.jupgoserver.service.S3Service;
 import jupgo.jupgoserver.util.response.StatusCode;
@@ -27,12 +28,12 @@ public class DiaryController {
     @ResponseBody
     @PostMapping()
     public SuccessResponse saveDiary(
-            @RequestPart("diaryData") DiaryRequestDto diaryRequestDto,
+            @RequestPart("diaryData") SaveDiaryRequestDto saveDiaryRequestDto,
             @RequestParam("file") MultipartFile file)
             throws Exception {
         String fileLink = s3Service.getLinkAfterSaveUploadFile(file);
-        diaryRequestDto.setPhoto(fileLink);
-        Diary diary = diaryService.saveDiary(diaryRequestDto);
-        return new SuccessResponse(StatusCode.OK.getCode(), StatusMessage.PLOGGING_SAVE_SUCCESS.getMessage(), diary);
+        saveDiaryRequestDto.setPhoto(fileLink);
+        SaveDiaryResponseDto saveDiaryResponseDto = diaryService.saveDiary(saveDiaryRequestDto);
+        return new SuccessResponse(StatusCode.OK.getCode(), StatusMessage.PLOGGING_SAVE_SUCCESS.getMessage(), saveDiaryResponseDto);
     }
 }

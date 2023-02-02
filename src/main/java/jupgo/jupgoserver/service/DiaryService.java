@@ -17,9 +17,9 @@ public class DiaryService {
         this.diaryRepository = diaryRepository;
     }
 
-    public void saveDiary(DiaryRequestDto diaryRequestDto) {
+    public Diary saveDiary(DiaryRequestDto diaryRequestDto) {
         Diary diary = new Diary(diaryRequestDto);
         diaryRepository.save(diary);
-        System.out.println("Duration after save : " + diary.getDuration());
+        return diary;
     }
 }

@@ -1,5 +1,8 @@
 package jupgo.jupgoserver.controller;
 
+import static jupgo.jupgoserver.util.response.StatusCode.OK;
+import static jupgo.jupgoserver.util.response.StatusMessage.*;
+
 import jupgo.jupgoserver.domain.diary.Diary;
 import jupgo.jupgoserver.dto.diary.SaveDiaryRequestDto;
 import jupgo.jupgoserver.dto.diary.SaveDiaryResponseDto;
@@ -34,6 +37,6 @@ public class DiaryController {
         String fileLink = s3Service.getLinkAfterSaveUploadFile(file);
         saveDiaryRequestDto.setPhoto(fileLink);
         SaveDiaryResponseDto saveDiaryResponseDto = diaryService.saveDiary(saveDiaryRequestDto);
-        return new SuccessResponse(StatusCode.OK.getCode(), StatusMessage.PLOGGING_SAVE_SUCCESS.getMessage(), saveDiaryResponseDto);
+        return new SuccessResponse(OK.getCode(), PLOGGING_SAVE_SUCCESS.getMessage(), saveDiaryResponseDto);
     }
 }

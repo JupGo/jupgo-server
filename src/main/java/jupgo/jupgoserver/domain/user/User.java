@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import jupgo.jupgoserver.domain.tree.Tree;
-import jupgo.jupgoserver.dto.diary.SaveDiaryRequestDto;
 import jupgo.jupgoserver.dto.user.SaveUserRequestDto;
 
 @Entity

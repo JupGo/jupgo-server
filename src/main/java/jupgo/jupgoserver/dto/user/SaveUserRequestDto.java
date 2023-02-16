@@ -9,7 +9,8 @@ public class SaveUserRequestDto {
 
     private String email;
     private Integer kakaoId;
-    private String accessToken;
+
+    private String code;
 
     public String getNickname() {
         return nickname;
@@ -25,6 +26,14 @@ public class SaveUserRequestDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
 

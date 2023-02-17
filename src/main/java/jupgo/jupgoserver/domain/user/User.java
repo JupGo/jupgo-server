@@ -19,7 +19,6 @@ public class User {
     private String email;
     private Integer kakaoId;
 
-
     @OneToMany(mappedBy = "user")
     private List<Tree> trees;
 
@@ -62,5 +61,9 @@ public class User {
 
     public void setKakaoId(Integer kakaoId) {
         this.kakaoId = kakaoId;
+    }
+
+    public List<Tree> getTrees() {
+        return trees;
     }
 }

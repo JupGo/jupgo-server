@@ -1,6 +1,7 @@
 package jupgo.jupgoserver.service;
 
 
+import java.util.Comparator;
 import java.util.List;
 import jupgo.jupgoserver.domain.tree.Tree;
 import jupgo.jupgoserver.domain.user.User;
@@ -29,7 +30,9 @@ public class UserService {
         if (trees.isEmpty()) {
             return -1;
         }
-        Tree currentTree = trees.get(0);
+        Tree currentTree = trees.stream()
+                .max(Comparator.comparing(Tree::getId))
+                .get();
         return currentTree.getId();
     }
 }

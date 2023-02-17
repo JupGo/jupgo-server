@@ -1,11 +1,17 @@
 package jupgo.jupgoserver.util.response;
 
-public class SuccessResponse<T> {
+public class Response<T> {
     private int statusCode;
     private String message;
     private T data;
 
-    public SuccessResponse(int statusCode, String message, T data) {
+    public Response(int statusCode, String message) {
+        this.statusCode = statusCode;
+        this.message = message;
+        this.data = null;
+    }
+
+    public Response(int statusCode, String message, T data) {
         this.statusCode = statusCode;
         this.message = message;
         this.data = data;

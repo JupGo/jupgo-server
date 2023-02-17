@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import jupgo.jupgoserver.domain.tree.Tree;
+import jupgo.jupgoserver.dto.user.SaveUserRequestDto;
 
 @Entity
 public class User {
@@ -14,13 +15,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nickname;
-
     private String email;
+    private Integer kakaoId;
+
 
     @OneToMany(mappedBy = "user")
     private List<Tree> trees;
+
+    public User(SaveUserRequestDto saveUserRequestDto) {
+        this.nickname = saveUserRequestDto.getNickname();
+        this.email = saveUserRequestDto.getEmail();
+        this.kakaoId = saveUserRequestDto.getKakaoId();
+    }
+
+    public User() {}
+
 
     public Long getId() {
         return id;
@@ -44,5 +54,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getKakaoId() {
+        return kakaoId;
+    }
+
+    public void setKakaoId(Integer kakaoId) {
+        this.kakaoId = kakaoId;
     }
 }

@@ -1,7 +1,10 @@
 package jupgo.jupgoserver.repository;
 import jupgo.jupgoserver.domain.user.User;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,8 +20,11 @@ public class UserRepository {
         return user;
     }
 
-    public Optional<User> findByEmail(String email) {
-        User user = em.find(User.class, email);
-        return Optional.ofNullable(user);
+    public List<User> findByKakaoUserId(Integer kakaoUserId) {
+        List<User> result = em.createQuery("select u from User u where u.kakaoId = :kakaoUserId", User.class)
+                .setParameter("kakaoUserId", kakaoUserId)
+                .getResultList();
+        return result;
     }
+
 }

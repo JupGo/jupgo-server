@@ -8,6 +8,7 @@ import jupgo.jupgoserver.dto.diary.SaveDiaryResponseDto;
 import jupgo.jupgoserver.service.DiaryService;
 import jupgo.jupgoserver.service.JwtService;
 import jupgo.jupgoserver.service.S3Service;
+import jupgo.jupgoserver.service.TreeService;
 import jupgo.jupgoserver.service.UserService;
 import jupgo.jupgoserver.util.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class DiaryController {
     private JwtService jwtService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TreeService treeService;
 
     @ResponseBody
     @PostMapping()
@@ -42,7 +45,9 @@ public class DiaryController {
             throws Exception {
         long userId = jwtService.decode(authorizationHeader.split(" ")[1]).getUser_id();
         long treeId = userService.getCurrentTreeIdByUserId(userId);
-        System.out.println(treeId);
+        if (treeId == -1) {
+            treeService.saveTreeInUser(userId);
+        }
         String fileLink = s3Service.getLinkAfterSaveUploadFile(file);
         saveDiaryRequestDto.setPhoto(fileLink);
         SaveDiaryResponseDto saveDiaryResponseDto = diaryService.saveDiary(saveDiaryRequestDto);

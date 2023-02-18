@@ -32,12 +32,12 @@ public class AuthService {
     }
 
     public JwtService.TokenRes kakaoLogin(final String code) throws Exception {
-        long userKakaoId = -1;
+        String userKakaoId = "-1";
         String accessToken = kakaoService.verifyAccessToken(code);
         JsonNode userInfo = kakaoService.getUserInfo(accessToken);
 
         try {
-            userKakaoId = userInfo.path("id").asLong();
+            userKakaoId = userInfo.path("id").asText();
         }
         catch (Exception e) {
             throw new Exception();
@@ -52,7 +52,7 @@ public class AuthService {
         } else {
             User newUser = new User();
             String email = userInfo.path("kakao_account").path("email").asText();
-            newUser.setKakaoId(userInfo.path("id").longValue());
+            newUser.setKakaoId(userInfo.path("id").toString());
 
             JsonNode kakao_account = userInfo.path("kakao_account");
             if (kakao_account.path("has_email").asBoolean() && kakao_account.path("is_email_valid").asBoolean() && kakao_account.path("is_email_verified").asBoolean()) {

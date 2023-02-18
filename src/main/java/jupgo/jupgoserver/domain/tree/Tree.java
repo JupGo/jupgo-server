@@ -1,5 +1,6 @@
 package jupgo.jupgoserver.domain.tree;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import jupgo.jupgoserver.domain.diary.Diary;
@@ -27,12 +28,21 @@ public class Tree {
     @OneToMany(mappedBy = "tree")
     private List<Diary> diaries;
 
-    public Long getId() {
-        return id;
+    public Tree(User user) {
+        this.user = user;
+        this.name = TreeType.generateName();
+        this.sort = TreeType.generateSort();
+        this.level = 0;
+        this.percentage = 0;
+        this.diaries = new ArrayList<>();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Tree() {
+
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -43,7 +53,19 @@ public class Tree {
         return percentage;
     }
 
-    public void setPercentage(Integer percentage) {
-        this.percentage = percentage;
+    public String getSort() {
+        return sort;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public List<Diary> getDiaries() {
+        return diaries;
     }
 }

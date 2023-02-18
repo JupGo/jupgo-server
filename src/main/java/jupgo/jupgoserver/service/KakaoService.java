@@ -73,6 +73,8 @@ public class KakaoService { //카카오톡 정보 반환
             System.out.println("\nSending 'GET' request to URL : " + RequestUrl);
             System.out.println("Response Code : " + responseCode);
 
+            if (responseCode != 200) return null;
+
             //JSON 형태 반환값 처리
             ObjectMapper mapper = new ObjectMapper();
             returnNode = mapper.readTree(response.getEntity().getContent());

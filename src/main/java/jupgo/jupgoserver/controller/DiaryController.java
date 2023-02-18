@@ -3,6 +3,7 @@ package jupgo.jupgoserver.controller;
 import static jupgo.jupgoserver.util.response.StatusCode.OK;
 import static jupgo.jupgoserver.util.response.StatusMessage.*;
 
+import jupgo.jupgoserver.domain.tree.Tree;
 import jupgo.jupgoserver.dto.diary.SaveDiaryRequestDto;
 import jupgo.jupgoserver.dto.diary.SaveDiaryResponseDto;
 import jupgo.jupgoserver.service.DiaryService;
@@ -47,9 +48,12 @@ public class DiaryController {
         long treeId = userService.getCurrentTreeIdByUserId(userId);
         if (treeId == -1) {
             treeService.saveTreeInUser(userId);
+            treeId = userService.getCurrentTreeIdByUserId(userId);
         }
+        Tree tree = treeService.getTreeById(treeId);
         String fileLink = s3Service.getLinkAfterSaveUploadFile(file);
         saveDiaryRequestDto.setPhoto(fileLink);
+        saveDiaryRequestDto.setTree(tree);
         SaveDiaryResponseDto saveDiaryResponseDto = diaryService.saveDiary(saveDiaryRequestDto);
         return new Response(OK.getCode(), PLOGGING_SAVE_SUCCESS.getMessage(), saveDiaryResponseDto);
     }

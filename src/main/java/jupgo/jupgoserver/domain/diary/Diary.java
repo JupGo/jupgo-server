@@ -33,6 +33,7 @@ public class Diary {
         this.distance = saveDiaryRequestDto.getDistance();
         this.duration = saveDiaryRequestDto.getDuration();
         this.photo = saveDiaryRequestDto.getPhoto();
+        this.tree = saveDiaryRequestDto.getTree();
     }
 
     public Diary() {

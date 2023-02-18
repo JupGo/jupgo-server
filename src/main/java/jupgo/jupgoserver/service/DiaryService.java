@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class DiaryService {
 
-    private DiaryRepository diaryRepository;
+    private final DiaryRepository diaryRepository;
 
     public DiaryService(DiaryRepository diaryRepository) {
         this.diaryRepository = diaryRepository;

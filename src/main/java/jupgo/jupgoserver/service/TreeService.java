@@ -28,4 +28,8 @@ public class TreeService {
     private Tree createTree(User user) {
         return new Tree(user);
     }
+
+    public Tree getTreeById(long treeId) {
+        return treeRepository.findById(treeId);
+    }
 }

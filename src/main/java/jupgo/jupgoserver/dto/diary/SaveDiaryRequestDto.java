@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import jupgo.jupgoserver.domain.tree.Tree;
 
 public class SaveDiaryRequestDto {
     private LocalDate date;
@@ -15,6 +16,16 @@ public class SaveDiaryRequestDto {
     private int distance;
     private Duration duration;
     private String photo;
+
+    public Tree getTree() {
+        return tree;
+    }
+
+    public void setTree(Tree tree) {
+        this.tree = tree;
+    }
+
+    private Tree tree;
 
     public LocalDate getDate() {
         return date;

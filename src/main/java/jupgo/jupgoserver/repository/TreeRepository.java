@@ -12,8 +12,13 @@ public class TreeRepository {
         this.em = em;
     }
 
-    public Tree save(Tree tree) {
+    public void save(Tree tree) {
         em.persist(tree);
-        return tree;
+    }
+
+    public Tree findById(long treeId) {
+        return em.createQuery("select tree from Tree tree where tree.id = :treeId", Tree.class)
+                .setParameter("treeId", treeId)
+                .getSingleResult();
     }
 }

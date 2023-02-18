@@ -23,7 +23,6 @@ public class UserController {
         try {
             return new Response(OK.getCode(), StatusMessage.LOGIN_SUCCESS.getMessage(), authService.kakaoLogin(code));
         } catch (Exception e) {
-            e.printStackTrace();
             return new Response(INTERNAL_ERROR.getCode(), StatusMessage.INTERNAL_ERROR.getMessage());
         }
     }

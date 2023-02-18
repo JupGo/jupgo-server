@@ -31,7 +31,7 @@ public class AuthService {
         this.userService = userService;
     }
 
-    public Object kakaoLogin(final String code) throws Exception {
+    public JwtService.TokenRes kakaoLogin(final String code) throws Exception {
         long userKakaoId = -1;
         String accessToken = kakaoService.verifyAccessToken(code);
         JsonNode userInfo = kakaoService.getUserInfo(accessToken);
@@ -40,7 +40,7 @@ public class AuthService {
             userKakaoId = userInfo.path("id").asLong();
         }
         catch (Exception e) {
-            return new Response(INTERNAL_ERROR.getCode(), StatusMessage.INTERNAL_ERROR.getMessage());
+            throw new Exception();
         }
 
         List<User> user = userRepository.findByKakaoUserId(userKakaoId);

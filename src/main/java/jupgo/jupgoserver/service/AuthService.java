@@ -4,11 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import jupgo.jupgoserver.domain.user.User;
 import jupgo.jupgoserver.dto.user.SaveUserResponseDto;
 import jupgo.jupgoserver.repository.UserRepository;
+import jupgo.jupgoserver.util.response.Response;
+import jupgo.jupgoserver.util.response.StatusMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
+import static jupgo.jupgoserver.util.response.StatusCode.INTERNAL_ERROR;
 
 @Service
 @Slf4j
@@ -27,15 +31,20 @@ public class AuthService {
         this.userService = userService;
     }
 
-    public JwtService.TokenRes kakaoLogin(final String code) {
-        int userKakaoId = -1;
+    public JwtService.TokenRes kakaoLogin(final String code) throws Exception {
+        long userKakaoId = -1;
         String accessToken = kakaoService.verifyAccessToken(code);
         JsonNode userInfo = kakaoService.getUserInfo(accessToken);
-        if (!userInfo.path("id").isMissingNode()) {
-            userKakaoId = userInfo.path("id").asInt();
+
+        try {
+            userKakaoId = userInfo.path("id").asLong();
         }
+        catch (Exception e) {
+            throw new Exception();
+        }
+
         List<User> user = userRepository.findByKakaoUserId(userKakaoId);
-        System.out.println(userInfo);
+        System.out.println("userInfo:"+  userInfo);
         if (!user.isEmpty()) {
             Long userId = user.get(0).getId();
             final JwtService.TokenRes tokenDto = new JwtService.TokenRes(jwtService.create(userId));
@@ -43,7 +52,7 @@ public class AuthService {
         } else {
             User newUser = new User();
             String email = userInfo.path("kakao_account").path("email").asText();
-            newUser.setKakaoId(userInfo.path("id").asInt());
+            newUser.setKakaoId(userInfo.path("id").longValue());
 
             JsonNode kakao_account = userInfo.path("kakao_account");
             if (kakao_account.path("has_email").asBoolean() && kakao_account.path("is_email_valid").asBoolean() && kakao_account.path("is_email_verified").asBoolean()) {

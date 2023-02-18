@@ -20,7 +20,7 @@ public class UserRepository {
         return user;
     }
 
-    public List<User> findByKakaoUserId(Integer kakaoUserId) {
+    public List<User> findByKakaoUserId(Long kakaoUserId) {
         List<User> result = em.createQuery("select u from User u where u.kakaoId = :kakaoUserId", User.class)
                 .setParameter("kakaoUserId", kakaoUserId)
                 .getResultList();

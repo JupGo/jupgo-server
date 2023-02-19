@@ -12,6 +12,10 @@ public class SaveUserRequestDto {
 
     private String code;
 
+    public String getKakaoId() {
+        return kakaoId;
+    }
+
     public String getNickname() {
         return nickname;
     }

@@ -17,7 +17,6 @@ import jupgo.jupgoserver.service.S3Service;
 import jupgo.jupgoserver.service.TreeService;
 import jupgo.jupgoserver.service.UserService;
 import jupgo.jupgoserver.util.response.Response;
-import jupgo.jupgoserver.util.response.StatusCode;
 import jupgo.jupgoserver.util.response.StatusMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,8 +55,8 @@ public class DiaryController {
             long userId = jwtService.decode(authorizationHeader.split(" ")[1]).getUser_id();
             long treeId = userService.getCurrentTreeIdByUserId(userId);
             if (treeId == -1) {
-                treeService.saveTreeInUser(userId);
-                treeId = userService.getCurrentTreeIdByUserId(userId);
+                Tree treeCreated  = treeService.createTreeInUser(userId);
+                treeId = treeCreated.getId();
             }
             Tree tree = treeService.getTreeById(treeId);
             String fileLink = s3Service.getLinkAfterSaveUploadFile(file);
@@ -68,7 +67,7 @@ public class DiaryController {
             return new Response(OK.getCode(), PLOGGING_SAVE_SUCCESS.getMessage(), saveDiaryResponseDto);
         } catch (JWTVerificationException e) {
             System.out.println(e);
-            return new Response(UNAUTHORIZED.getCode(), StatusMessage.UNAUTHORIZED.getMessage());
+            return new Response(UNAUTHORIZED.getCode(), StatusMessage.INVALID_TOKEN.getMessage());
         }
         catch (Exception e) {
             System.out.println(e);
@@ -78,9 +77,20 @@ public class DiaryController {
 
     @ResponseBody
     @GetMapping("/{treeId}")
-    public Response getDiariesOfTree(@PathVariable("treeId") Long treeId){
-        ReturnTreeContainDiariesDto returnTreeContainDiariesDto = treeService.getDiariesByTreeId(treeId);
-        return new Response(OK.getCode(), GET_DIARIES_OF_TREE_SUCCESS.getMessage(), returnTreeContainDiariesDto);
+    public Response getDiariesOfTree(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @PathVariable("treeId") Long treeId){
+        try {
+            long userId = jwtService.decode(authorizationHeader.split(" ")[1]).getUser_id();
+            ReturnTreeContainDiariesDto returnTreeContainDiariesDto = treeService.getDiariesByTreeIdAfterValidateAuthorization(treeId, userId);
+            return new Response(OK.getCode(), GET_DIARIES_OF_TREE_SUCCESS.getMessage(), returnTreeContainDiariesDto);
+        } catch (JWTVerificationException e) {
+            System.out.println(e);
+            return new Response(UNAUTHORIZED.getCode(), StatusMessage.INVALID_TOKEN.getMessage());
+        } catch (Exception e) {
+            System.out.println(e);
+            return new Response(INTERNAL_ERROR.getCode(), StatusMessage.INTERNAL_ERROR.getMessage());
+        }
     }
 
     @ResponseBody

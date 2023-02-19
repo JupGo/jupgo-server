@@ -8,9 +8,11 @@ import jupgo.jupgoserver.domain.user.User;
 import jupgo.jupgoserver.dto.user.SaveUserResponseDto;
 import jupgo.jupgoserver.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@Transactional
 public class UserService {
     private UserRepository userRepository;
     public UserService(UserRepository userRepository) { this.userRepository = userRepository; }
@@ -24,9 +26,13 @@ public class UserService {
     }
 
     public long getCurrentTreeIdByUserId(long userId) {
+        System.out.println("check in getCurrentTreeIdByUserId");
+        System.out.println("userId: " + userId);
         User user = userRepository.findById(userId);
+        System.out.println("user: " + user);
         System.out.println(user.getId() + " / " + user.getNickname());
         List<Tree> trees = user.getTrees();
+        System.out.println("trees of user: " + trees);
         if (trees.isEmpty()) {
             return -1;
         }
@@ -38,5 +44,13 @@ public class UserService {
 
     public List<Tree> getTreesByUserId(long userId) {
         return userRepository.findById(userId).getTrees();
+    }
+
+    public void deleteUser(long userId) {
+        userRepository.deleteById(userId);
+    }
+
+    public User getUserById(long userId) {
+        return userRepository.findById(userId);
     }
 }

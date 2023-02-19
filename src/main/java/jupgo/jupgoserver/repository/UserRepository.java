@@ -1,9 +1,7 @@
 package jupgo.jupgoserver.repository;
 import jupgo.jupgoserver.domain.user.User;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -28,10 +26,12 @@ public class UserRepository {
     }
 
     public User findById(long userId) {
-        List<User> users = em.createQuery("select u from User u where u.id = :userId", User.class)
+        return em.createQuery("select u from User u where u.id = :userId", User.class)
                 .setParameter("userId", userId)
-                .getResultList();
-        return users.get(0);
+                .getSingleResult();
     }
 
+    public void deleteById(long userId) {
+        em.remove(findById(userId));
+    }
 }

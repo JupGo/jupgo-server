@@ -3,6 +3,7 @@ package jupgo.jupgoserver.service;
 import java.time.Duration;
 import jupgo.jupgoserver.domain.tree.Tree;
 import jupgo.jupgoserver.domain.user.User;
+import jupgo.jupgoserver.dto.tree.ReturnTreeContainDiariesDto;
 import jupgo.jupgoserver.repository.TreeRepository;
 import jupgo.jupgoserver.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,9 @@ public class TreeService {
     public void addExperience(Tree tree, int distance, Duration duration) {
         tree.addExperience(distance, duration);
         treeRepository.save(tree);
+    }
+
+    public ReturnTreeContainDiariesDto getDiariesByTreeId(Long treeId) {
+        return new ReturnTreeContainDiariesDto(treeRepository.findById(treeId));
     }
 }

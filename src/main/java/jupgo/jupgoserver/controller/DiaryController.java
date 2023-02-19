@@ -9,6 +9,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import jupgo.jupgoserver.domain.tree.Tree;
 import jupgo.jupgoserver.dto.diary.SaveDiaryRequestDto;
 import jupgo.jupgoserver.dto.diary.SaveDiaryResponseDto;
+import jupgo.jupgoserver.dto.tree.ReturnTreeContainDiariesDto;
 import jupgo.jupgoserver.service.DiaryService;
 import jupgo.jupgoserver.service.JwtService;
 import jupgo.jupgoserver.service.S3Service;
@@ -20,6 +21,7 @@ import jupgo.jupgoserver.util.response.StatusMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,6 +73,13 @@ public class DiaryController {
             System.out.println(e);
             return new Response(INTERNAL_ERROR.getCode(), StatusMessage.INTERNAL_ERROR.getMessage());
         }
+    }
+
+    @ResponseBody
+    @GetMapping("/{treeId}")
+    public Response getDiariesOfTree(@PathVariable("treeId") Long treeId){
+        ReturnTreeContainDiariesDto returnTreeContainDiariesDto = treeService.getDiariesByTreeId(treeId);
+        return new Response(OK.getCode(), GET_DIARIES_OF_TREE_SUCCESS.getMessage(), returnTreeContainDiariesDto);
     }
 
     @ResponseBody

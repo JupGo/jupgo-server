@@ -1,6 +1,8 @@
 package jupgo.jupgoserver.service;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.stream.Collectors;
 import jupgo.jupgoserver.domain.tree.Tree;
 import jupgo.jupgoserver.domain.user.User;
 import jupgo.jupgoserver.dto.tree.ReturnTreeContainDiariesDto;
@@ -42,5 +44,11 @@ public class TreeService {
 
     public ReturnTreeContainDiariesDto getDiariesByTreeId(Long treeId) {
         return new ReturnTreeContainDiariesDto(treeRepository.findById(treeId));
+    }
+
+    public List<ReturnTreeContainDiariesDto> getAllDiariesByTrees(List<Tree> trees) {
+        return trees.stream()
+                .map(tree -> getDiariesByTreeId(tree.getId()))
+                .collect(Collectors.toList());
     }
 }

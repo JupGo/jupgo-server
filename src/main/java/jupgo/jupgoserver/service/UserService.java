@@ -35,4 +35,8 @@ public class UserService {
                 .get();
         return currentTree.getId();
     }
+
+    public List<Tree> getTreesByUserId(long userId) {
+        return userRepository.findById(userId).getTrees();
+    }
 }

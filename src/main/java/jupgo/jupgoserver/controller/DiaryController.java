@@ -6,6 +6,7 @@ import static jupgo.jupgoserver.util.response.StatusCode.UNAUTHORIZED;
 import static jupgo.jupgoserver.util.response.StatusMessage.*;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import java.util.List;
 import jupgo.jupgoserver.domain.tree.Tree;
 import jupgo.jupgoserver.dto.diary.SaveDiaryRequestDto;
 import jupgo.jupgoserver.dto.diary.SaveDiaryResponseDto;
@@ -80,6 +81,15 @@ public class DiaryController {
     public Response getDiariesOfTree(@PathVariable("treeId") Long treeId){
         ReturnTreeContainDiariesDto returnTreeContainDiariesDto = treeService.getDiariesByTreeId(treeId);
         return new Response(OK.getCode(), GET_DIARIES_OF_TREE_SUCCESS.getMessage(), returnTreeContainDiariesDto);
+    }
+
+    @ResponseBody
+    @GetMapping("/all")
+    public Response getDiariesOfAllTrees(@RequestHeader("Authorization") String authorizationHeader){
+        long userId = jwtService.decode(authorizationHeader.split(" ")[1]).getUser_id();
+        List<Tree> trees = userService.getTreesByUserId(userId);
+        List<ReturnTreeContainDiariesDto> returnTreeContainDiariesDtos = treeService.getAllDiariesByTrees(trees);
+        return new Response(OK.getCode(), GET_ALL_DIARIES.getMessage(), returnTreeContainDiariesDtos);
     }
 
     @ResponseBody

@@ -1,5 +1,6 @@
 package jupgo.jupgoserver.domain.tree;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -32,12 +33,31 @@ public class Tree {
         this.user = user;
         this.name = TreeType.generateName();
         this.sort = TreeType.generateSort();
-        this.level = 0;
+        this.level = 1;
         this.percentage = 0;
         this.diaries = new ArrayList<>();
     }
 
     public Tree() {
+        this.name = TreeType.generateName();
+        this.sort = TreeType.generateSort();
+        this.level = 1;
+        this.percentage = 0;
+        this.diaries = new ArrayList<>();
+    }
+
+    public void addExperience(int distance, Duration duration) {
+        int experienceOfDistance = convertDistanceToExperience(distance);
+        int experienceOfDuration = convertDistanceToExperience(duration);
+        ExperienceManager.addExperience(this, experienceOfDistance + experienceOfDuration);
+    }
+
+    private int convertDistanceToExperience(int distance) {
+        return distance;
+    }
+
+    private int convertDistanceToExperience(Duration duration) {
+        return (int) (duration.getSeconds() / 60) * 100;
 
     }
 
@@ -53,12 +73,20 @@ public class Tree {
         return percentage;
     }
 
+    public void setPercentage(Integer percentage) {
+        this.percentage = percentage;
+    }
+
     public String getSort() {
         return sort;
     }
 
     public Integer getLevel() {
         return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public User getUser() {

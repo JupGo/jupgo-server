@@ -1,8 +1,11 @@
 package jupgo.jupgoserver.controller;
 
+import static jupgo.jupgoserver.util.response.StatusCode.INTERNAL_ERROR;
 import static jupgo.jupgoserver.util.response.StatusCode.OK;
+import static jupgo.jupgoserver.util.response.StatusCode.UNAUTHORIZED;
 import static jupgo.jupgoserver.util.response.StatusMessage.*;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import jupgo.jupgoserver.domain.tree.Tree;
 import jupgo.jupgoserver.dto.diary.SaveDiaryRequestDto;
 import jupgo.jupgoserver.dto.diary.SaveDiaryResponseDto;
@@ -12,6 +15,8 @@ import jupgo.jupgoserver.service.S3Service;
 import jupgo.jupgoserver.service.TreeService;
 import jupgo.jupgoserver.service.UserService;
 import jupgo.jupgoserver.util.response.Response;
+import jupgo.jupgoserver.util.response.StatusCode;
+import jupgo.jupgoserver.util.response.StatusMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,18 +49,28 @@ public class DiaryController {
             @RequestParam("file") MultipartFile file,
             @RequestHeader("Authorization") String authorizationHeader)
             throws Exception {
-        long userId = jwtService.decode(authorizationHeader.split(" ")[1]).getUser_id();
-        long treeId = userService.getCurrentTreeIdByUserId(userId);
-        if (treeId == -1) {
-            treeService.saveTreeInUser(userId);
-            treeId = userService.getCurrentTreeIdByUserId(userId);
+        try {
+            long userId = jwtService.decode(authorizationHeader.split(" ")[1]).getUser_id();
+            long treeId = userService.getCurrentTreeIdByUserId(userId);
+            if (treeId == -1) {
+                treeService.saveTreeInUser(userId);
+                treeId = userService.getCurrentTreeIdByUserId(userId);
+            }
+            Tree tree = treeService.getTreeById(treeId);
+            String fileLink = s3Service.getLinkAfterSaveUploadFile(file);
+            saveDiaryRequestDto.setPhoto(fileLink);
+            saveDiaryRequestDto.setTree(tree);
+            SaveDiaryResponseDto saveDiaryResponseDto = diaryService.saveDiary(saveDiaryRequestDto);
+            treeService.addExperience(tree, saveDiaryRequestDto.getDistance(), saveDiaryRequestDto.getDuration());
+            return new Response(OK.getCode(), PLOGGING_SAVE_SUCCESS.getMessage(), saveDiaryResponseDto);
+        } catch (JWTVerificationException e) {
+            System.out.println(e);
+            return new Response(UNAUTHORIZED.getCode(), StatusMessage.UNAUTHORIZED.getMessage());
         }
-        Tree tree = treeService.getTreeById(treeId);
-        String fileLink = s3Service.getLinkAfterSaveUploadFile(file);
-        saveDiaryRequestDto.setPhoto(fileLink);
-        saveDiaryRequestDto.setTree(tree);
-        SaveDiaryResponseDto saveDiaryResponseDto = diaryService.saveDiary(saveDiaryRequestDto);
-        return new Response(OK.getCode(), PLOGGING_SAVE_SUCCESS.getMessage(), saveDiaryResponseDto);
+        catch (Exception e) {
+            System.out.println(e);
+            return new Response(INTERNAL_ERROR.getCode(), StatusMessage.INTERNAL_ERROR.getMessage());
+        }
     }
 
     @ResponseBody

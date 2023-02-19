@@ -1,5 +1,6 @@
 package jupgo.jupgoserver.service;
 
+import java.time.Duration;
 import jupgo.jupgoserver.domain.tree.Tree;
 import jupgo.jupgoserver.domain.user.User;
 import jupgo.jupgoserver.repository.TreeRepository;
@@ -31,5 +32,10 @@ public class TreeService {
 
     public Tree getTreeById(long treeId) {
         return treeRepository.findById(treeId);
+    }
+
+    public void addExperience(Tree tree, int distance, Duration duration) {
+        tree.addExperience(distance, duration);
+        treeRepository.save(tree);
     }
 }

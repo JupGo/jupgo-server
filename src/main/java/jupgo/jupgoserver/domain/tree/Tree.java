@@ -39,6 +39,21 @@ public class Tree {
         return name;
     }
 
+    public void setName(String name) { this.name = name; }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) { this.sort = sort; }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) { this.level = level; }
+
+
     public Integer getPercentage() {
         return percentage;
     }

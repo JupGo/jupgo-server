@@ -1,9 +1,9 @@
 package jupgo.jupgoserver.util.response;
 
 public class Response<T>  {
-    private int statusCode;
-    private String message;
-    private T data;
+    private final int statusCode;
+    private final String message;
+    private final T data;
 
     public Response(int statusCode, String message) {
         this.statusCode = statusCode;

@@ -20,11 +20,18 @@ public class UserRepository {
         return user;
     }
 
-    public List<User> findByKakaoUserId(Long kakaoUserId) {
+    public List<User> findByKakaoUserId(String kakaoUserId) {
         List<User> result = em.createQuery("select u from User u where u.kakaoId = :kakaoUserId", User.class)
                 .setParameter("kakaoUserId", kakaoUserId)
                 .getResultList();
         return result;
+    }
+
+    public User findById(long userId) {
+        List<User> users = em.createQuery("select u from User u where u.id = :userId", User.class)
+                .setParameter("userId", userId)
+                .getResultList();
+        return users.get(0);
     }
 
 }

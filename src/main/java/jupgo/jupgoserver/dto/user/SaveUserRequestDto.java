@@ -8,7 +8,7 @@ public class SaveUserRequestDto {
     private String nickname;
 
     private String email;
-    private Long     kakaoId;
+    private String kakaoId;
 
     private String code;
 

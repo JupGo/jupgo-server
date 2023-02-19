@@ -43,7 +43,7 @@ public class JwtService {
             //토큰 해싱해서 반환
             return b.sign(Algorithm.HMAC256(SECRET));
         } catch (JWTCreationException JwtCreationException) {
-            log.info(JwtCreationException.getMessage());
+//            log.info(JwtCreationException.getMessage());
         }
         return null;
     }

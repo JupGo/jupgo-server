@@ -9,6 +9,7 @@ public enum StatusMessage {
 
     // Tree
     GET_MY_TREES_SUCCESS("내가 키우는 나무 조회 성공"),
+    GET_CURRENT_TREE_SUCCESS("현재 키우는 나무 조회 성공"),
 
     SIGNUP_SUCCESS("회원가입 성공"),
     LOGIN_SUCCESS("로그인 성공"),

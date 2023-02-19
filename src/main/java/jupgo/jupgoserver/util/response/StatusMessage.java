@@ -12,6 +12,8 @@ public enum StatusMessage {
 
     LOGIN_FAIL("로그인 실패"),
     UNAUTHORIZED("유효하지 않은 토큰입니다."),
+    NOT_OWNER_OF_TREE("로그인 한 유저의 나무가 아닙니다."),
+    NOT_EXIST_TREE("존재하지 않는 나무의 id입니다."),
     INTERNAL_ERROR("서버 내부 오류");
 
     private final String message;

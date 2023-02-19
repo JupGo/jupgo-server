@@ -24,9 +24,13 @@ public class UserService {
     }
 
     public long getCurrentTreeIdByUserId(long userId) {
+        System.out.println("check in getCurrentTreeIdByUserId");
+        System.out.println("userId: " + userId);
         User user = userRepository.findById(userId);
+        System.out.println("user: " + user);
         System.out.println(user.getId() + " / " + user.getNickname());
         List<Tree> trees = user.getTrees();
+        System.out.println("trees of user: " + trees);
         if (trees.isEmpty()) {
             return -1;
         }

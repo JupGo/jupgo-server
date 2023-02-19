@@ -43,7 +43,7 @@ public class UserController {
             return new Response(OK.getCode(), StatusMessage.WITHDRAW_SUCCESS.getMessage());
         } catch (JWTVerificationException e) {
             System.out.println(e);
-            return new Response(UNAUTHORIZED.getCode(), StatusMessage.UNAUTHORIZED.getMessage());
+            return new Response(UNAUTHORIZED.getCode(), StatusMessage.INVALID_TOKEN.getMessage());
         } catch (Exception e) {
             return new Response(INTERNAL_ERROR.getCode(), StatusMessage.INTERNAL_ERROR.getMessage());
         }

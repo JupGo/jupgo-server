@@ -1,7 +1,6 @@
 package jupgo.jupgoserver.controller;
 
 import static jupgo.jupgoserver.util.response.StatusCode.INTERNAL_ERROR;
-import static jupgo.jupgoserver.util.response.StatusCode.NOT_FOUND;
 import static jupgo.jupgoserver.util.response.StatusCode.OK;
 import static jupgo.jupgoserver.util.response.StatusCode.UNAUTHORIZED;
 import static jupgo.jupgoserver.util.response.StatusMessage.*;
@@ -20,7 +19,6 @@ import jupgo.jupgoserver.service.UserService;
 import jupgo.jupgoserver.util.response.Response;
 import jupgo.jupgoserver.util.response.StatusMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,7 +67,7 @@ public class DiaryController {
             return new Response(OK.getCode(), PLOGGING_SAVE_SUCCESS.getMessage(), saveDiaryResponseDto);
         } catch (JWTVerificationException e) {
             System.out.println(e);
-            return new Response(UNAUTHORIZED.getCode(), StatusMessage.UNAUTHORIZED.getMessage());
+            return new Response(UNAUTHORIZED.getCode(), StatusMessage.INVALID_TOKEN.getMessage());
         }
         catch (Exception e) {
             System.out.println(e);
@@ -88,15 +86,8 @@ public class DiaryController {
             return new Response(OK.getCode(), GET_DIARIES_OF_TREE_SUCCESS.getMessage(), returnTreeContainDiariesDto);
         } catch (JWTVerificationException e) {
             System.out.println(e);
-            return new Response(UNAUTHORIZED.getCode(), StatusMessage.UNAUTHORIZED.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
-            return new Response(UNAUTHORIZED.getCode(), StatusMessage.NOT_OWNER_OF_TREE.getMessage());
-        } catch (EmptyResultDataAccessException e) {
-            System.out.println(e);
-            return new Response(NOT_FOUND.getCode(), StatusMessage.NOT_EXIST_TREE.getMessage());
-        }
-        catch (Exception e) {
+            return new Response(UNAUTHORIZED.getCode(), StatusMessage.INVALID_TOKEN.getMessage());
+        } catch (Exception e) {
             System.out.println(e);
             return new Response(INTERNAL_ERROR.getCode(), StatusMessage.INTERNAL_ERROR.getMessage());
         }

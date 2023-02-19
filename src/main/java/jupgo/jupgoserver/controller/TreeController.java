@@ -63,8 +63,7 @@ public class TreeController {
             long userId = jwtService.decode(authorizationHeader.split(" ")[1]).getUser_id();
             long treeId = userService.getCurrentTreeIdByUserId(userId);
             if (treeId == -1) {
-                Tree treeCreated  = treeService.createTreeInUser(userId);
-                treeId = treeCreated.getId();
+                return new Response(OK.getCode(), GET_CURRENT_TREE_SUCCESS.getMessage());
             }
             Tree tree = treeService.getTreeById(treeId);
             ReturnTreeDto returnTreeDto = new ReturnTreeDto(tree);

@@ -88,6 +88,7 @@ public class JwtService {
     //반환될 토큰Res
     @Data
     public static class TokenRes {
+
         //실제 토큰
         private String token;
         //userId 반환
@@ -104,6 +105,24 @@ public class JwtService {
             this.token = token;
             this.userId = userId;
         }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(long userId) {
+            this.userId = userId;
+        }
+
+
     }
 
     // 권환 확인

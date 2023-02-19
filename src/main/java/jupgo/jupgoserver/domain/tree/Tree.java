@@ -26,7 +26,7 @@ public class Tree {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "tree")
+    @OneToMany(mappedBy = "tree", cascade = CascadeType.REMOVE)
     private List<Diary> diaries;
 
     public Tree(User user) {

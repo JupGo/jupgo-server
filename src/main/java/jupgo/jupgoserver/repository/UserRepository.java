@@ -1,9 +1,7 @@
 package jupgo.jupgoserver.repository;
 import jupgo.jupgoserver.domain.user.User;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -33,4 +31,7 @@ public class UserRepository {
                 .getSingleResult();
     }
 
+    public void deleteById(long userId) {
+        em.remove(findById(userId));
+    }
 }

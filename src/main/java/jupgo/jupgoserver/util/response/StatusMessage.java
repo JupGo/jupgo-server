@@ -9,6 +9,7 @@ public enum StatusMessage {
 
     SIGNUP_SUCCESS("회원가입 성공"),
     LOGIN_SUCCESS("로그인 성공"),
+    WITHDRAW_SUCCESS("회원탈퇴 성공"),
 
     LOGIN_FAIL("로그인 실패"),
     UNAUTHORIZED("유효하지 않은 토큰입니다."),

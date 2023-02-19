@@ -1,6 +1,7 @@
 package jupgo.jupgoserver.domain.user;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,7 @@ public class User {
     private String email;
     private String kakaoId;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Tree> trees;
 
     public User(SaveUserRequestDto saveUserRequestDto) {
